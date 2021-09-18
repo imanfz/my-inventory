@@ -6,11 +6,12 @@
         <entry key="app/src/main/res/drawable/bg_splashscreen.xml" value="0.13703703703703704" />
         <entry key="app/src/main/res/drawable/ic_arrow_left.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_equipment.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.2139917695473251" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.1" />
         <entry key="app/src/main/res/layout/custom_toolbar.xml" value="0.165" />
         <entry key="app/src/main/res/layout/fragment_friend.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1" />
+        <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
       </map>
     </option>
   </component>
