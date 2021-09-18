@@ -1,7 +1,8 @@
-package com.imanfz.myinventory
+package com.imanfz.myinventory.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.imanfz.myinventory.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
