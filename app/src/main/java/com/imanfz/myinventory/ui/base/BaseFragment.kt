@@ -12,10 +12,14 @@ import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.imanfz.myinventory.R
 import com.imanfz.myinventory.utils.hide
+import org.jetbrains.anko.find
 
 abstract class BaseFragment<B : ViewBinding>(
-    private val bindingFactory : (LayoutInflater, ViewGroup?, Boolean) -> B
-) : Fragment() {
+    private val bindingFactory : (
+        LayoutInflater,
+        ViewGroup?,
+        Boolean
+    ) -> B) : Fragment() {
 
     private var _binding : B? = null
     val binding get() = _binding
@@ -36,9 +40,9 @@ abstract class BaseFragment<B : ViewBinding>(
 
     fun setupToolbar(title: String, backgroundBlue: Boolean? = false) {
 
-        val tvTitle = binding?.root?.findViewById<AppCompatTextView>(R.id.tv_title)
-        val btnBack = binding?.root?.findViewById<AppCompatImageView>(R.id.btn_back)
-        val clToolbar = binding?.root?.findViewById<ConstraintLayout>(R.id.cl_toolbar)
+        val tvTitle = binding?.root?.find<AppCompatTextView>(R.id.tv_title)
+        val btnBack = binding?.root?.find<AppCompatImageView>(R.id.btn_back)
+        val clToolbar = binding?.root?.find<ConstraintLayout>(R.id.cl_toolbar)
 
         if (tvTitle != null) {
             tvTitle.text = title

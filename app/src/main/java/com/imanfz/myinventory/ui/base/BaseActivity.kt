@@ -17,9 +17,11 @@ import androidx.viewbinding.ViewBinding
 import com.imanfz.myinventory.R
 import com.imanfz.myinventory.utils.hide
 import com.imanfz.myinventory.utils.show
+import org.jetbrains.anko.find
 
-abstract class BaseActivity<B: ViewBinding>(val bindingFactory: (LayoutInflater) -> B)
-    : AppCompatActivity() {
+abstract class BaseActivity<B: ViewBinding>(
+    val bindingFactory: (LayoutInflater
+    ) -> B) : AppCompatActivity() {
 
     val binding : B by lazy {
         bindingFactory(layoutInflater)
@@ -39,19 +41,19 @@ abstract class BaseActivity<B: ViewBinding>(val bindingFactory: (LayoutInflater)
     }
 
     fun setupToolbar(title: String, isBackEnabled: Boolean = false, backgroundBlue: Boolean? = false) {
-        val tvTitle = binding.root.findViewById<AppCompatTextView>(R.id.tv_title)
-        val btnBack = binding.root.findViewById<AppCompatImageView>(R.id.btn_back)
-        val clToolbar = binding.root.findViewById<ConstraintLayout>(R.id.cl_toolbar)
+        val tvTitle = binding.root.find<AppCompatTextView>(R.id.tv_title)
+        val btnBack = binding.root.find<AppCompatImageView>(R.id.btn_back)
+        val clToolbar = binding.root.find<ConstraintLayout>(R.id.cl_toolbar)
         tvTitle.text = title
         if (isBackEnabled) {
-            btnBack?.show()
-            btnBack?.setOnClickListener { onBackPressed() }
+            btnBack.show()
+            btnBack.setOnClickListener { onBackPressed() }
         } else {
-            btnBack?.hide()
+            btnBack.hide()
         }
 
         if (backgroundBlue == true){
-            clToolbar?.setBackgroundColor(ContextCompat.getColor(this, R.color.primary))
+            clToolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.primary))
             tvTitle.setTextColor(ContextCompat.getColor(this, R.color.white))
             btnBack.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_arrow_left_white))
         }
