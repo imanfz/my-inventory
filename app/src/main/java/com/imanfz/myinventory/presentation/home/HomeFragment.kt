@@ -1,9 +1,9 @@
-package com.imanfz.myinventory.ui.home
+package com.imanfz.myinventory.presentation.home
 
 import android.os.Bundle
 import android.view.View
 import com.imanfz.myinventory.databinding.FragmentHomeBinding
-import com.imanfz.myinventory.ui.base.BaseFragment
+import com.imanfz.myinventory.presentation.base.BaseFragment
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(
     FragmentHomeBinding::inflate

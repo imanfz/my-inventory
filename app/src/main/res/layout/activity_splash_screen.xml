@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:gravity="center"
     android:background="@drawable/bg_splashscreen"
-    tools:context=".ui.splashscreen.SplashScreenActivity">
+    tools:context=".presentation.splashscreen.SplashScreenActivity">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="150dp"

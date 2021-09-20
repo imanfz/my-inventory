@@ -1,4 +1,4 @@
-package com.imanfz.myinventory.ui.base
+package com.imanfz.myinventory.presentation.base
 
 import android.os.Bundle
 import android.view.LayoutInflater

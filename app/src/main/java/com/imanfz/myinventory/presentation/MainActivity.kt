@@ -1,8 +1,8 @@
-package com.imanfz.myinventory.ui
+package com.imanfz.myinventory.presentation
 
 import android.os.Bundle
 import com.imanfz.myinventory.databinding.ActivityMainBinding
-import com.imanfz.myinventory.ui.base.BaseActivity
+import com.imanfz.myinventory.presentation.base.BaseActivity
 
 class MainActivity :
     BaseActivity<ActivityMainBinding>(

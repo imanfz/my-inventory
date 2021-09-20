@@ -2,17 +2,18 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/bottom_navigation">
+    android:id="@+id/bottom_navigation"
+    app:startDestination="@id/navigation_home">
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.imanfz.myinventory.ui.home.HomeFragment"
+        android:name="com.imanfz.myinventory.presentation.home.HomeFragment"
         android:label="@string/home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_friend"
-        android:name="com.imanfz.myinventory.ui.friend.FriendFragment"
+        android:name="com.imanfz.myinventory.presentation.friend.FriendFragment"
         android:label="@string/friend"
         tools:layout="@layout/fragment_friend" />
 
