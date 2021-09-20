@@ -1,5 +1,6 @@
 package com.imanfz.myinventory.data.local.entity
 
+import android.graphics.Bitmap
 import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -16,5 +17,8 @@ data class EquipmentEntity (
     var name: String? = null,
 
     @ColumnInfo
-    var quantity: Int? = null
+    var quantity: Int? = null,
+
+    @ColumnInfo
+    var image: Bitmap? = null
 ) : Parcelable

@@ -2,4 +2,7 @@
     <string name="app_name">My Inventory</string>
     <string name="home">Home</string>
     <string name="friend">Friend</string>
+    <string name="no_data">No Data</string>
+    <string name="item_name">Item Name</string>
+    <string name="item_count">Item Count</string>
 </resources>

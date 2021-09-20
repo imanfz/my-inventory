@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Query
 import com.imanfz.myinventory.data.local.entity.EquipmentEntity
-import io.reactivex.Single
 
 @Dao
 interface EquipmentDao: BaseDao<EquipmentEntity> {

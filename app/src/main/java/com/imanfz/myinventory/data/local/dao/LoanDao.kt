@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Query
 import com.imanfz.myinventory.data.local.entity.LoanEntity
-import io.reactivex.Single
 
 @Dao
 interface LoanDao: BaseDao<LoanEntity> {

@@ -14,4 +14,5 @@
     <color name="primaryDark">#0F679A</color>
     <color name="primaryLight">#BEE6FC</color>
     <color name="darkerGray">#C2C2C2</color>
+    <color name="transparent">#0D000000</color>
 </resources>
