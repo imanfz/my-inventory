@@ -7,9 +7,9 @@ import com.imanfz.myinventory.data.local.dao.FriendDao
 import com.imanfz.myinventory.data.local.dao.LoanDao
 import com.imanfz.myinventory.data.local.database.AppDatabase
 import com.imanfz.myinventory.data.local.entity.EquipmentEntity
+import com.imanfz.myinventory.data.local.entity.EquipmentLoanEntity
 import com.imanfz.myinventory.data.local.entity.FriendEntity
 import com.imanfz.myinventory.data.local.entity.LoanEntity
-import io.reactivex.Single
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -75,8 +75,8 @@ class AppRepository(
         executorService.execute { loanDao.delete(data) }
     }
 
-    fun getAllLoan(): LiveData<List<LoanEntity>> = loanDao.getAll()
+    fun getLoanByEquipmentId(id: Int): LiveData<List<EquipmentLoanEntity>> = loanDao.getByEquipmentId(id)
 
-    fun getLoanById(id: Int): LoanEntity = loanDao.getById(id)
+    fun getLoanByFriendId(id: Int): LiveData<List<EquipmentLoanEntity>> = loanDao.getByFriendId(id)
 
 }

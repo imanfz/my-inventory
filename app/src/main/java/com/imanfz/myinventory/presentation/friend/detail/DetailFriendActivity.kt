@@ -1,4 +1,4 @@
-package com.imanfz.myinventory.presentation.equipment
+package com.imanfz.myinventory.presentation.friend.detail
 
 import android.app.Activity
 import android.os.Bundle
@@ -12,25 +12,26 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.imanfz.myinventory.R
-import com.imanfz.myinventory.data.local.entity.EquipmentEntity
-import com.imanfz.myinventory.databinding.ActivityEquipmentBinding
+import com.imanfz.myinventory.data.local.entity.FriendEntity
+import com.imanfz.myinventory.databinding.ActivityDetailFriendBinding
 import com.imanfz.myinventory.presentation.base.BaseActivity
 import com.imanfz.myinventory.presentation.equipment.adapter.EquipmentLoanAdapter
 import com.imanfz.myinventory.utils.*
 import com.imanfz.myinventory.viewmodel.AppViewModel
 import com.imanfz.myinventory.viewmodel.ViewModelFactory
 
-class EquipmentActivity :
-    BaseActivity<ActivityEquipmentBinding>(
-        ActivityEquipmentBinding::inflate
-) {
+class DetailFriendActivity :
+    BaseActivity<ActivityDetailFriendBinding>(
+        ActivityDetailFriendBinding::inflate
+    ) {
+
     companion object {
-        const val EXTRA_EQUIPMENT = "extra_equipment"
+        const val EXTRA_FRIEND = "extra.friend"
     }
 
     private lateinit var appViewModel: AppViewModel
     private lateinit var equipmentLoanAdapter: EquipmentLoanAdapter
-    private var equipment: EquipmentEntity? = null
+    private var friend: FriendEntity? = null
     private var isEdit = false
     private var imageByteArray: ByteArray? = null
 
@@ -71,21 +72,19 @@ class EquipmentActivity :
         appViewModel = obtainViewModel(this)
         equipmentLoanAdapter = EquipmentLoanAdapter()
         binding.rvEquipment.apply {
-            layoutManager = LinearLayoutManager(this@EquipmentActivity)
+            layoutManager = LinearLayoutManager(this@DetailFriendActivity)
             setHasFixedSize(true)
             adapter = equipmentLoanAdapter
         }
-        equipment = intent.getParcelableExtra(EXTRA_EQUIPMENT)
+        friend = intent.getParcelableExtra(EXTRA_FRIEND)
         disabled(true)
-        binding.btnLoan.btnText.text = getString(R.string.loan)
-        if (equipment != null) {
-            setupToolbar("Edit Item", true, isEditEnabled = true, isDeleteEnabled = true)
+        if (friend != null) {
+            setupToolbar("Edit Friend", true, isEditEnabled = true, isDeleteEnabled = true)
             binding.apply {
-                if (equipment != null) {
-                    equipment?.let {
-                        etItemName.setText(it.name)
-                        etItemCount.setText(it.quantity.toString())
-                        it.image?.let { it1 ->
+                if (friend != null) {
+                    friend?.let {
+                        etPersonName.setText(it.name)
+                        it.avatar?.let { it1 ->
                             ivImage.loadImageFromByteArray(it1)
                             imageByteArray = it1
                         }
@@ -94,16 +93,16 @@ class EquipmentActivity :
                 btnSave.btnText.text = getString(R.string.update)
             }
         } else {
-            setupToolbar("New Item", true)
-            equipment = EquipmentEntity()
+            setupToolbar("New Friend", true)
+            friend = FriendEntity()
             disabled(false)
             binding.btnSave.btnText.text = getString(R.string.save)
         }
     }
 
     private fun setupObserver() {
-        equipment?.id?.let {
-            appViewModel.getLoanByEquipmentId(it).observe(
+        friend?.id?.let {
+            appViewModel.getLoanByFriendId(it).observe(
                 this, { list ->
                     if (list.count() > 0) {
                         binding.rvEquipment.show()
@@ -140,7 +139,7 @@ class EquipmentActivity :
             }
 
             btnPickImage.setOnClickListener {
-                ImagePicker.with(this@EquipmentActivity)
+                ImagePicker.with(this@DetailFriendActivity)
                     .compress(3072)   //Final image size will be less than 3 MB(Optional)
                     .maxResultSize(
                         1080,
@@ -152,37 +151,27 @@ class EquipmentActivity :
                     }
             }
 
-            btnLoan.btnPrimary.setOnClickListener {
-
-            }
-
             btnSave.btnPrimary.setOnClickListener {
-                val name = etItemName.text.toString()
-                val qty = etItemCount.text.toString()
+                val name = etPersonName.text.toString()
 
                 when {
-                    name.isEmpty() -> tilItemName.error = "Field can not be blank"
-                    qty.isEmpty() -> tilItemCount.error = "Field can not be blank"
-                    (qty.toInt() == 0) -> tilItemCount.error = "Value cannot equals zero"
+                    name.isEmpty() -> tilPersonName.error = "Field can not be blank"
                     else -> {
-                        equipment?.let {
+                        friend?.let {
                             it.name = name
-                            it.quantity = qty.toInt()
-                            it.image = imageByteArray
+                            it.avatar = imageByteArray
                         }
                         if (isEdit) {
-                            appViewModel.updateEquipment(equipment as EquipmentEntity)
+                            appViewModel.updateFriend(friend as FriendEntity)
                             showToast("Data has been changed")
                         } else {
-                            appViewModel.insertEquipment(equipment as EquipmentEntity)
+                            appViewModel.insertFriend(friend as FriendEntity)
                             showToast("Successfully adding data")
                         }
                         finish()
                     }
                 }
             }
-
-
         }
     }
 
@@ -197,15 +186,15 @@ class EquipmentActivity :
 
     private fun showAlertDialog() {
         val dialogTitle = "Delete"
-        val dialogMessage = "Are you sure to delete this item?"
+        val dialogMessage = "Are you sure to delete this friend?"
         val alertDialogBuilder = AlertDialog.Builder(this)
         with(alertDialogBuilder) {
             setTitle(dialogTitle)
             setMessage(dialogMessage)
             setCancelable(false)
             setPositiveButton("Yes") { _, _ ->
-                appViewModel.deleteEquipment(equipment as EquipmentEntity)
-                showToast("Item has been delete")
+                appViewModel.deleteFriend(friend as FriendEntity)
+                showToast("Friend has been delete")
                 finish()
             }
             setNegativeButton("No") { dialog, _ -> dialog.cancel() }
@@ -218,21 +207,18 @@ class EquipmentActivity :
         if (value) {
             binding.apply {
                 btnPickImage.hide()
-                etItemName.isEnabled = false
-                etItemCount.isEnabled = false
-                layoutFriend.show()
-                btnLoan.root.show()
+                etPersonName.isEnabled = false
+                layoutEquipment.show()
                 btnSave.root.hide()
             }
         } else {
             binding.apply {
                 btnPickImage.show()
-                etItemName.isEnabled = true
-                etItemCount.isEnabled = true
-                layoutFriend.hide()
-                btnLoan.root.hide()
+                etPersonName.isEnabled = true
+                layoutEquipment.hide()
                 btnSave.root.show()
             }
         }
     }
+
 }

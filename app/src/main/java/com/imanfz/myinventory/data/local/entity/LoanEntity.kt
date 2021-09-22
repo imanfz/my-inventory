@@ -16,5 +16,8 @@ data class LoanEntity (
     var friendId: Int,
 
     @ColumnInfo
-    var equipmentId:Int
+    var equipmentId: Int,
+
+    @ColumnInfo
+    var count: Int
 ) : Parcelable

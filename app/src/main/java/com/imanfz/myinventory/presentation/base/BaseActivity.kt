@@ -40,10 +40,11 @@ abstract class BaseActivity<B: ViewBinding>(
         return true
     }
 
-    fun setupToolbar(title: String, isBackEnabled: Boolean = false, backgroundBlue: Boolean? = false) {
+    fun setupToolbar(title: String, isBackEnabled: Boolean = false, isEditEnabled: Boolean = false, isDeleteEnabled: Boolean = false) {
         val tvTitle = binding.root.find<AppCompatTextView>(R.id.tv_title)
         val btnBack = binding.root.find<AppCompatImageView>(R.id.btn_back)
-        val clToolbar = binding.root.find<ConstraintLayout>(R.id.cl_toolbar)
+        val btnDelete = binding.root.find<AppCompatImageView>(R.id.btn_delete)
+        val btnEdit = binding.root.find<AppCompatImageView>(R.id.btn_edit)
         tvTitle.text = title
         if (isBackEnabled) {
             btnBack.show()
@@ -52,11 +53,8 @@ abstract class BaseActivity<B: ViewBinding>(
             btnBack.hide()
         }
 
-        if (backgroundBlue == true){
-            clToolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.primary))
-            tvTitle.setTextColor(ContextCompat.getColor(this, R.color.white))
-            btnBack.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_arrow_left_white))
-        }
+        if (isEditEnabled) btnEdit.show() else btnEdit.hide()
+        if (isDeleteEnabled) btnDelete.show() else btnDelete.hide()
     }
 
     private fun hideSystemUI() {
