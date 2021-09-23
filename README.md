@@ -6,7 +6,7 @@ My application for test case android developer
 Dominic Toretto has retired from his fast and the furious driving days and spends his
 days tinkering in his garage. His friends always come to borrow tools from him and he’s finding it difficult to keep track of who took what. He has hired you to build an app to keep track of his tools.
 <li>Requirements</li>
-<ul>
+<ol>
     <li>Dominic wants to see all the tools in his toolshed in a convenient list. The tool name and an easily identifiable icon or image must be in the list. See next page for a list of tools he owns.</li>
     <li>In this list, per tool, he would also like to see the total item count and the borrowed (number of items loaned to friends) item count.</li>
     <li>Whenever he is loaning out a tool, he’d like to tap on the tool and enter the name of his friend to whom he is giving the tool. Press “Ok” and one item will be marked as loaned. The item counts in the list should update accordingly.</li>
@@ -16,4 +16,4 @@ days tinkering in his garage. His friends always come to borrow tools from him a
     <li>When the borrowed count is zero, that tool should not appear in the friend’s list anymore.</li>
     <li>Item counts per tool should be up to date when navigating from screen to screen.</li>
     <li>Dominic is a very old fashioned guy and his phone doesn’t have access to the internet. So all the app data must be stored only locally (no external services) and must not be lost when the app restarts.</li>
-</ul>
+</ol>
