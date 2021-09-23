@@ -7,8 +7,6 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.imanfz.myinventory.R
@@ -20,7 +18,6 @@ import com.imanfz.myinventory.presentation.base.BaseActivity
 import com.imanfz.myinventory.presentation.friend.detail.adapter.FriendLoanAdapter
 import com.imanfz.myinventory.utils.*
 import com.imanfz.myinventory.viewmodel.AppViewModel
-import com.imanfz.myinventory.viewmodel.ViewModelFactory
 
 class DetailFriendActivity :
     BaseActivity<ActivityDetailFriendBinding>(
@@ -46,7 +43,7 @@ class DetailFriendActivity :
                     val fileUri = data?.data
 
                     fileUri?.let {
-                        binding.ivImage.loadImageFromUri(it)
+                        binding.ivImage.loadCircleImageFromUri(it)
                         imageByteArray = contentResolver.openInputStream(it)?.readBytes()
                     }
                 }
@@ -68,9 +65,9 @@ class DetailFriendActivity :
     }
 
     private fun init() {
-        appViewModel = obtainViewModel(this)
+        appViewModel = obtainViewModel()
         friendLoanAdapter = FriendLoanAdapter(object : FriendLoanAdapter.OnClickListener {
-            override fun OnCLick(data: EquipmentLoanEntity) {
+            override fun onCLick(data: EquipmentLoanEntity) {
                 showDialogConfirm(data)
             }
         })
@@ -114,7 +111,7 @@ class DetailFriendActivity :
                     friend?.let {
                         etFriendName.setText(it.name)
                         it.avatar?.let { it1 ->
-                            ivImage.loadImageFromByteArray(it1)
+                            ivImage.loadCircleImageFromByteArray(it1)
                             imageByteArray = it1
                         }
                     }
@@ -185,11 +182,6 @@ class DetailFriendActivity :
                 }
             }
         }
-    }
-
-    private fun obtainViewModel(activity: AppCompatActivity): AppViewModel {
-        val factory = ViewModelFactory.getInstance(activity.application)
-        return ViewModelProvider(activity, factory).get(AppViewModel::class.java)
     }
 
     private fun showToast(message: String) {

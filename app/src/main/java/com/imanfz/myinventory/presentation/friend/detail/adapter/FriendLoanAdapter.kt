@@ -4,10 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.imanfz.myinventory.R
 import com.imanfz.myinventory.data.local.entity.EquipmentLoanEntity
 import com.imanfz.myinventory.databinding.ItemRowEquipmentLoanBinding
 import com.imanfz.myinventory.presentation.friend.detail.FriendLoanDiffCallback
-import com.imanfz.myinventory.utils.loadImageFromByteArray
+import com.imanfz.myinventory.utils.loadCircleImageFromByteArray
 
 class FriendLoanAdapter(
     val listener : OnClickListener
@@ -42,17 +43,20 @@ class FriendLoanAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(loan: EquipmentLoanEntity) {
             binding.apply {
-                loan.equipment.image?.let { ivFriend.loadImageFromByteArray(it) }
+                loan.equipment.image?.let { ivFriend.loadCircleImageFromByteArray(it) }
                 tvName.text = loan.equipment.name
-                tvCount.text = "Qty: ${loan.loanEntity.count}"
+                tvCount.text = binding.root.context.getString(
+                    R.string.qty,
+                    loan.loanEntity.count
+                )
                 root.setOnClickListener {
-                    listener.OnCLick(loan)
+                    listener.onCLick(loan)
                 }
             }
         }
     }
 
     interface OnClickListener {
-        fun OnCLick(data: EquipmentLoanEntity)
+        fun onCLick(data: EquipmentLoanEntity)
     }
 }

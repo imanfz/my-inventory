@@ -1,55 +1,61 @@
 package com.imanfz.myinventory.utils
 
-import android.graphics.drawable.Drawable
-import androidx.core.content.res.ResourcesCompat
+import android.content.Context
+import com.imanfz.myinventory.R
 import com.imanfz.myinventory.data.local.entity.EquipmentEntity
 import com.imanfz.myinventory.data.local.entity.FriendEntity
 
-object SampleData {
+class SampleData(context: Context) {
+
     val sampleEquipment = arrayListOf(
         EquipmentEntity(
             name = "Wrench",
-            image = null,
+            image = context.convertToByteArray(R.drawable.wrench),
             quantity = 6
         ),
         EquipmentEntity(
             name = "Cutter",
-            image = null,
+            image = context.convertToByteArray(R.drawable.cutter),
             quantity = 15
         ),
         EquipmentEntity(
             name = "Pliers",
-            image = null,
+            image = context.convertToByteArray(R.drawable.pliers),
             quantity = 12
         ),
         EquipmentEntity(
             name = "Screwdriver",
-            image = null,
+            image = context.convertToByteArray(R.drawable.screwdriver),
             quantity = 13
         ),
         EquipmentEntity(
+            name = "Welding machine",
+            image = context.convertToByteArray(R.drawable.welding_machine),
+            quantity = 3
+        ),
+        EquipmentEntity(
             name = "Welding glasses",
-            image = null,
+            image =  context.convertToByteArray(R.drawable.welding_glasses),
             quantity = 7
         ),
         EquipmentEntity(
             name = "Hammer",
-            image = null,
+            image = context.convertToByteArray(R.drawable.hammer),
             quantity = 4
         ),
         EquipmentEntity(
             name = "Measuring Tape",
-            image = null,
+            image = context.convertToByteArray(R.drawable.tape),
             quantity = 9
         ),
         EquipmentEntity(
             name = "Alan key set",
-            image = null,
+            image =  context.convertToByteArray(R.drawable.alan_key),
             quantity = 4
         ),
         EquipmentEntity(
             name = "Air compressor",
-            image = null,
+            image =  context.convertToByteArray(R.drawable.air_compressor),
             quantity = 2
         )
     )
@@ -57,23 +63,23 @@ object SampleData {
     val sampleFriend = arrayListOf(
         FriendEntity(
             name = "Brian",
-            avatar = null
+            avatar = context.convertToByteArray(R.drawable.brian)
         ),
         FriendEntity(
             name = "Luke",
-            avatar = null
+            avatar = context.convertToByteArray(R.drawable.luke)
         ),
         FriendEntity(
             name = "Letty",
-            avatar = null
+            avatar = context.convertToByteArray(R.drawable.letty)
         ),
         FriendEntity(
             name = "Shaw",
-            avatar = null
+            avatar = context.convertToByteArray(R.drawable.shaw)
         ),
         FriendEntity(
             name = "Parker",
-            avatar = null
+            avatar = context.convertToByteArray(R.drawable.parker)
         )
     )
 }

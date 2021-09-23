@@ -15,4 +15,5 @@
     <string name="john">John</string>
     <string name="friend_name">Friend Name</string>
     <string name="ok">OK</string>
+    <string name="qty">Qty: %d</string>
 </resources>

@@ -9,7 +9,7 @@ import com.imanfz.myinventory.databinding.ItemRowFriendBinding
 import com.imanfz.myinventory.presentation.friend.FriendDiffCallback
 import com.imanfz.myinventory.presentation.friend.detail.DetailFriendActivity
 import com.imanfz.myinventory.utils.EXTRA_FRIEND
-import com.imanfz.myinventory.utils.loadImageFromByteArray
+import com.imanfz.myinventory.utils.loadCircleImageFromByteArray
 import org.jetbrains.anko.startActivity
 
 class FriendAdapter : RecyclerView.Adapter<FriendAdapter.FriendViewHolder>() {
@@ -41,7 +41,7 @@ class FriendAdapter : RecyclerView.Adapter<FriendAdapter.FriendViewHolder>() {
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(friend: FriendEntity) {
             binding.apply {
-                friend.avatar?.let { ivFriend.loadImageFromByteArray(it) }
+                friend.avatar?.let { ivFriend.loadCircleImageFromByteArray(it) }
                 tvName.text = friend.name
                 root.setOnClickListener {
                     it.context.startActivity<DetailFriendActivity>(EXTRA_FRIEND to friend.id)

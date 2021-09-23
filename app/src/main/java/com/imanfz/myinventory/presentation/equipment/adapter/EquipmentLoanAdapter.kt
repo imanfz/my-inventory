@@ -4,10 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.imanfz.myinventory.R
 import com.imanfz.myinventory.data.local.entity.EquipmentLoanEntity
 import com.imanfz.myinventory.databinding.ItemRowEquipmentLoanBinding
 import com.imanfz.myinventory.presentation.equipment.EquipmentLoanDiffCallback
-import com.imanfz.myinventory.utils.loadImageFromByteArray
+import com.imanfz.myinventory.utils.loadCircleImageFromByteArray
 
 class EquipmentLoanAdapter : RecyclerView.Adapter<EquipmentLoanAdapter.EquipmentLoanViewHolder>() {
     private val listEquipmentLoan = ArrayList<EquipmentLoanEntity>()
@@ -40,9 +41,12 @@ class EquipmentLoanAdapter : RecyclerView.Adapter<EquipmentLoanAdapter.Equipment
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(loan: EquipmentLoanEntity) {
             binding.apply {
-                loan.friend.avatar?.let { ivFriend.loadImageFromByteArray(it) }
+                loan.friend.avatar?.let { ivFriend.loadCircleImageFromByteArray(it) }
                 tvName.text = loan.friend.name
-                tvCount.text = "Qty: ${loan.loanEntity.count}"
+                tvCount.text = binding.root.context.getString(
+                    R.string.qty,
+                    loan.loanEntity.count
+                )
             }
         }
     }

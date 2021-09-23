@@ -46,8 +46,8 @@ abstract class AppDatabase: RoomDatabase() {
                             // insert sample data on first create db
                             Executors.newSingleThreadExecutor().execute {
                                 INSTANCE?.let {
-                                    it.equipmentDao().insert(SampleData.sampleEquipment)
-                                    it.friendDao().insert(SampleData.sampleFriend)
+                                    it.equipmentDao().insert(SampleData(context.applicationContext).sampleEquipment)
+                                    it.friendDao().insert(SampleData(context.applicationContext).sampleFriend)
                                 }
                             }
                         }

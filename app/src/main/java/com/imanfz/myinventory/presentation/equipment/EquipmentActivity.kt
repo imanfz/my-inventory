@@ -41,7 +41,7 @@ class EquipmentActivity :
                     val fileUri = data?.data
 
                     fileUri?.let {
-                        binding.ivImage.loadImageFromUri(it)
+                        binding.ivImage.loadCircleImageFromUri(it)
                         imageByteArray = contentResolver.openInputStream(it)?.readBytes()
                     }
                 }
@@ -63,7 +63,7 @@ class EquipmentActivity :
     }
 
     private fun init() {
-        appViewModel = obtainViewModel(this)
+        appViewModel = obtainViewModel()
         equipmentLoanAdapter = EquipmentLoanAdapter()
         binding.rvEquipment.apply {
             layoutManager = LinearLayoutManager(this@EquipmentActivity)
@@ -109,7 +109,7 @@ class EquipmentActivity :
                         etItemCount.setText(it.quantity.toString())
                         if (it.quantity == 0) btnLoan.root.hide()
                         it.image?.let { it1 ->
-                            ivImage.loadImageFromByteArray(it1)
+                            ivImage.loadCircleImageFromByteArray(it1)
                             imageByteArray = it1
                         }
                     }
