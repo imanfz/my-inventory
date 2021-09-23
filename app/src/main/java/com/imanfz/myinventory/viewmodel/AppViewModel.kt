@@ -18,6 +18,9 @@ class AppViewModel(
     fun getAllEquipment() : LiveData<List<EquipmentEntity>> =
         appRepository.getAllEquipment()
 
+    fun getEquipmentById(id: Int) : LiveData<EquipmentEntity> =
+        appRepository.getEquipmentById(id)
+
     fun insertEquipment(data: EquipmentEntity) {
         appRepository.insertEquipment(data)
     }
@@ -33,6 +36,9 @@ class AppViewModel(
     // Friend
     fun getAllFriend() : LiveData<List<FriendEntity>> =
         appRepository.getAllFriend()
+
+    fun getAFriendById(id: Int) : LiveData<FriendEntity> =
+        appRepository.getFriendById(id)
 
     fun insertFriend(data: FriendEntity) {
         appRepository.insertFriend(data)
@@ -66,4 +72,6 @@ class AppViewModel(
     fun getLoanByFriendId(id: Int) : LiveData<List<EquipmentLoanEntity>> =
         appRepository.getLoanByFriendId(id)
 
+    fun checkLoan(eId: Int, fId: Int) : LiveData<LoanEntity> =
+        appRepository.checkLoan(eId, fId)
 }

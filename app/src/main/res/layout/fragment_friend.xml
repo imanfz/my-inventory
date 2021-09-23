@@ -21,7 +21,7 @@
             android:layout_height="match_parent"
             android:paddingHorizontal="24dp"
             android:paddingTop="8dp"
-            tools:listitem="@layout/item_row_equipment_loan"/>
+            tools:listitem="@layout/item_row_friend"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

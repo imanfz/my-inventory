@@ -5,11 +5,14 @@
     <string name="no_data">No Data</string>
     <string name="item_name">Item Name</string>
     <string name="item_count">Item Count</string>
-    <string name="person_name">Person Name</string>
     <string name="add">add</string>
     <string name="loan">Loan</string>
     <string name="update">Update</string>
     <string name="save">Save</string>
     <string name="list_equipment">List Equipment</string>
     <string name="list_friend">List Friend</string>
+    <string name="equipment_name">Equipment Name:</string>
+    <string name="john">John</string>
+    <string name="friend_name">Friend Name</string>
+    <string name="ok">OK</string>
 </resources>

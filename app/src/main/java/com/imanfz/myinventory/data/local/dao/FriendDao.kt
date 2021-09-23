@@ -12,6 +12,6 @@ interface FriendDao: BaseDao<FriendEntity> {
     fun getAll(): LiveData<List<FriendEntity>>
 
     @Query("SELECT * FROM tb_friend WHERE id = :mId")
-    fun getById(mId: Int): FriendEntity
+    fun getById(mId: Int): LiveData<FriendEntity>
 
 }

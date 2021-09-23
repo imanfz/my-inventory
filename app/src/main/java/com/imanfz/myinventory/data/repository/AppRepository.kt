@@ -43,7 +43,7 @@ class AppRepository(
 
     fun getAllEquipment(): LiveData<List<EquipmentEntity>> = equipmentDao.getAll()
 
-    fun getEquipmentById(id: Int): EquipmentEntity = equipmentDao.getById(id)
+    fun getEquipmentById(id: Int): LiveData<EquipmentEntity> = equipmentDao.getById(id)
 
     // Friend
     fun insertFriend(data: FriendEntity) {
@@ -60,7 +60,7 @@ class AppRepository(
 
     fun getAllFriend(): LiveData<List<FriendEntity>> = friendDao.getAll()
 
-    fun getFriendById(id: Int): FriendEntity = friendDao.getById(id)
+    fun getFriendById(id: Int): LiveData<FriendEntity> = friendDao.getById(id)
 
     // Loan
     fun insertLoan(data: LoanEntity) {
@@ -78,5 +78,7 @@ class AppRepository(
     fun getLoanByEquipmentId(id: Int): LiveData<List<EquipmentLoanEntity>> = loanDao.getByEquipmentId(id)
 
     fun getLoanByFriendId(id: Int): LiveData<List<EquipmentLoanEntity>> = loanDao.getByFriendId(id)
+
+    fun checkLoan(eId: Int, fId: Int): LiveData<LoanEntity> = loanDao.checkLoan(eId, fId)
 
 }

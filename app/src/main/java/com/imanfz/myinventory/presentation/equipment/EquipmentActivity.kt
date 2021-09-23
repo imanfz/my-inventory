@@ -7,8 +7,6 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.imanfz.myinventory.R
@@ -18,18 +16,15 @@ import com.imanfz.myinventory.presentation.base.BaseActivity
 import com.imanfz.myinventory.presentation.equipment.adapter.EquipmentLoanAdapter
 import com.imanfz.myinventory.utils.*
 import com.imanfz.myinventory.viewmodel.AppViewModel
-import com.imanfz.myinventory.viewmodel.ViewModelFactory
 
 class EquipmentActivity :
     BaseActivity<ActivityEquipmentBinding>(
         ActivityEquipmentBinding::inflate
 ) {
-    companion object {
-        const val EXTRA_EQUIPMENT = "extra_equipment"
-    }
 
     private lateinit var appViewModel: AppViewModel
     private lateinit var equipmentLoanAdapter: EquipmentLoanAdapter
+    private var equipmentId = 0
     private var equipment: EquipmentEntity? = null
     private var isEdit = false
     private var imageByteArray: ByteArray? = null
@@ -75,16 +70,44 @@ class EquipmentActivity :
             setHasFixedSize(true)
             adapter = equipmentLoanAdapter
         }
-        equipment = intent.getParcelableExtra(EXTRA_EQUIPMENT)
+        //equipment = intent.getParcelableExtra(EXTRA_EQUIPMENT)
+        equipmentId = intent.getIntExtra(EXTRA_EQUIPMENT, 0)
         disabled(true)
+    }
+
+    private fun setupObserver() {
+        appViewModel.getEquipmentById(equipmentId).observe(
+            this, {
+                if (it != null) {
+                    equipment = it
+                    setupView()
+                }
+            }
+        )
+        appViewModel.getLoanByEquipmentId(equipmentId).observe(
+            this, { list ->
+                if (list.count() > 0) {
+                    binding.rvEquipment.show()
+                    binding.layoutEmpty.root.hide()
+                    equipmentLoanAdapter.setListEquipmentLoan(list)
+                } else {
+                    binding.rvEquipment.hide()
+                    binding.layoutEmpty.root.show()
+                }
+            }
+        )
+    }
+
+    private fun setupView() {
         binding.btnLoan.btnText.text = getString(R.string.loan)
-        if (equipment != null) {
+        if (equipmentId != 0) {
             setupToolbar("Edit Item", true, isEditEnabled = true, isDeleteEnabled = true)
             binding.apply {
                 if (equipment != null) {
                     equipment?.let {
                         etItemName.setText(it.name)
                         etItemCount.setText(it.quantity.toString())
+                        if (it.quantity == 0) btnLoan.root.hide()
                         it.image?.let { it1 ->
                             ivImage.loadImageFromByteArray(it1)
                             imageByteArray = it1
@@ -98,23 +121,6 @@ class EquipmentActivity :
             equipment = EquipmentEntity()
             disabled(false)
             binding.btnSave.btnText.text = getString(R.string.save)
-        }
-    }
-
-    private fun setupObserver() {
-        equipment?.id?.let {
-            appViewModel.getLoanByEquipmentId(it).observe(
-                this, { list ->
-                    if (list.count() > 0) {
-                        binding.rvEquipment.show()
-                        binding.layoutEmpty.root.hide()
-                        equipmentLoanAdapter.setListEquipmentLoan(list)
-                    } else {
-                        binding.rvEquipment.hide()
-                        binding.layoutEmpty.root.show()
-                    }
-                }
-            )
         }
     }
 
@@ -153,7 +159,13 @@ class EquipmentActivity :
             }
 
             btnLoan.btnPrimary.setOnClickListener {
-
+                LoanDialogFragment.apply {
+                    if (equipment != null) {
+                        equipment?.let {
+                            newInstance(it).show(supportFragmentManager, "")
+                        }
+                    }
+                }
             }
 
             btnSave.btnPrimary.setOnClickListener {
@@ -184,11 +196,6 @@ class EquipmentActivity :
 
 
         }
-    }
-
-    private fun obtainViewModel(activity: AppCompatActivity): AppViewModel {
-        val factory = ViewModelFactory.getInstance(activity.application)
-        return ViewModelProvider(activity, factory).get(AppViewModel::class.java)
     }
 
     private fun showToast(message: String) {

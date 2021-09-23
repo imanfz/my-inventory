@@ -124,7 +124,8 @@
             android:id="@+id/rv_equipment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginTop="8dp"
+            tools:listitem="@layout/item_row_equipment_loan"/>
 
         <include
             android:id="@+id/layout_empty"

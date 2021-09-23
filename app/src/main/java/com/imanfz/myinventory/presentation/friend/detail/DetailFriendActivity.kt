@@ -12,10 +12,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.imanfz.myinventory.R
+import com.imanfz.myinventory.data.local.entity.EquipmentEntity
+import com.imanfz.myinventory.data.local.entity.EquipmentLoanEntity
 import com.imanfz.myinventory.data.local.entity.FriendEntity
 import com.imanfz.myinventory.databinding.ActivityDetailFriendBinding
 import com.imanfz.myinventory.presentation.base.BaseActivity
-import com.imanfz.myinventory.presentation.equipment.adapter.EquipmentLoanAdapter
+import com.imanfz.myinventory.presentation.friend.detail.adapter.FriendLoanAdapter
 import com.imanfz.myinventory.utils.*
 import com.imanfz.myinventory.viewmodel.AppViewModel
 import com.imanfz.myinventory.viewmodel.ViewModelFactory
@@ -25,12 +27,9 @@ class DetailFriendActivity :
         ActivityDetailFriendBinding::inflate
     ) {
 
-    companion object {
-        const val EXTRA_FRIEND = "extra.friend"
-    }
-
     private lateinit var appViewModel: AppViewModel
-    private lateinit var equipmentLoanAdapter: EquipmentLoanAdapter
+    private lateinit var friendLoanAdapter: FriendLoanAdapter
+    private var friendId = 0
     private var friend: FriendEntity? = null
     private var isEdit = false
     private var imageByteArray: ByteArray? = null
@@ -70,20 +69,50 @@ class DetailFriendActivity :
 
     private fun init() {
         appViewModel = obtainViewModel(this)
-        equipmentLoanAdapter = EquipmentLoanAdapter()
+        friendLoanAdapter = FriendLoanAdapter(object : FriendLoanAdapter.OnClickListener {
+            override fun OnCLick(data: EquipmentLoanEntity) {
+                showDialogConfirm(data)
+            }
+        })
         binding.rvEquipment.apply {
             layoutManager = LinearLayoutManager(this@DetailFriendActivity)
             setHasFixedSize(true)
-            adapter = equipmentLoanAdapter
+            adapter = friendLoanAdapter
         }
-        friend = intent.getParcelableExtra(EXTRA_FRIEND)
+        friendId = intent.getIntExtra(EXTRA_FRIEND, 0)
         disabled(true)
-        if (friend != null) {
+    }
+
+    private fun setupObserver() {
+        appViewModel.getAFriendById(friendId).observe(
+            this, {
+                if (it != null) {
+                    friend = it
+                    setupView()
+                }
+            }
+        )
+        appViewModel.getLoanByFriendId(friendId).observe(
+            this, { list ->
+                if (list.count() > 0) {
+                    binding.rvEquipment.show()
+                    binding.layoutEmpty.root.hide()
+                    friendLoanAdapter.setListEquipmentLoan(list)
+                } else {
+                    binding.rvEquipment.hide()
+                    binding.layoutEmpty.root.show()
+                }
+            }
+        )
+    }
+
+    private fun setupView() {
+        if (friendId != 0) {
             setupToolbar("Edit Friend", true, isEditEnabled = true, isDeleteEnabled = true)
             binding.apply {
                 if (friend != null) {
                     friend?.let {
-                        etPersonName.setText(it.name)
+                        etFriendName.setText(it.name)
                         it.avatar?.let { it1 ->
                             ivImage.loadImageFromByteArray(it1)
                             imageByteArray = it1
@@ -97,23 +126,6 @@ class DetailFriendActivity :
             friend = FriendEntity()
             disabled(false)
             binding.btnSave.btnText.text = getString(R.string.save)
-        }
-    }
-
-    private fun setupObserver() {
-        friend?.id?.let {
-            appViewModel.getLoanByFriendId(it).observe(
-                this, { list ->
-                    if (list.count() > 0) {
-                        binding.rvEquipment.show()
-                        binding.layoutEmpty.root.hide()
-                        equipmentLoanAdapter.setListEquipmentLoan(list)
-                    } else {
-                        binding.rvEquipment.hide()
-                        binding.layoutEmpty.root.show()
-                    }
-                }
-            )
         }
     }
 
@@ -152,7 +164,7 @@ class DetailFriendActivity :
             }
 
             btnSave.btnPrimary.setOnClickListener {
-                val name = etPersonName.text.toString()
+                val name = etFriendName.text.toString()
 
                 when {
                     name.isEmpty() -> tilPersonName.error = "Field can not be blank"
@@ -207,18 +219,41 @@ class DetailFriendActivity :
         if (value) {
             binding.apply {
                 btnPickImage.hide()
-                etPersonName.isEnabled = false
+                etFriendName.isEnabled = false
                 layoutEquipment.show()
                 btnSave.root.hide()
             }
         } else {
             binding.apply {
                 btnPickImage.show()
-                etPersonName.isEnabled = true
+                etFriendName.isEnabled = true
                 layoutEquipment.hide()
                 btnSave.root.show()
             }
         }
     }
 
+    private fun showDialogConfirm(data: EquipmentLoanEntity) {
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage("Are you sure this item returned ?")
+            .setCancelable(false)
+            .setPositiveButton("OK") { _, _ ->
+                appViewModel.deleteLoan(data.loanEntity)
+                appViewModel.updateEquipment(
+                    EquipmentEntity(
+                        id = data.equipment.id,
+                        name = data.equipment.name,
+                        image = data.equipment.image,
+                        quantity = (data.equipment.quantity?.plus(data.loanEntity.count))
+                    )
+                )
+                showToast("Success, equipment has been returned")
+            }
+            .setNegativeButton("Cancel") { dialog, _ ->
+                // Dismiss the dialog
+                dialog.dismiss()
+            }
+        val alert = builder.create()
+        alert.show()
+    }
 }

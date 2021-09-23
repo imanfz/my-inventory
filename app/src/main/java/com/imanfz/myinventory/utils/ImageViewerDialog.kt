@@ -15,11 +15,6 @@ class ImageViewerDialog : DialogFragment() {
     val binding get() = _binding
 
     companion object {
-
-        private const val EXTRA_IMAGE = "extra.image"
-        private const val EXTRA_BYTE = "extra.byte"
-        private const val CODE = "code"
-
         @JvmStatic
         fun newInstance(image: String?, byteArray: ByteArray?, code: Int) = ImageViewerDialog().apply {
             arguments = Bundle().apply {
@@ -61,7 +56,6 @@ class ImageViewerDialog : DialogFragment() {
             val width = ViewGroup.LayoutParams.MATCH_PARENT
             val height = ViewGroup.LayoutParams.WRAP_CONTENT
             it.setLayout(width, height)
-            it.setBackgroundDrawableResource(R.color.transparent)
         }
     }
 }

@@ -23,4 +23,7 @@ interface LoanDao: BaseDao<LoanEntity> {
     @Transaction
     @Query("SELECT * FROM tb_loan WHERE friendId = :fId")
     fun getByFriendId(fId: Int): LiveData<List<EquipmentLoanEntity>>
+
+    @Query("SELECT * FROM tb_loan WHERE equipmentId = :eId AND friendId = :fId")
+    fun checkLoan(eId: Int, fId: Int): LiveData<LoanEntity>
 }

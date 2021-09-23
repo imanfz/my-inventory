@@ -65,12 +65,12 @@
             android:id="@+id/til_person_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/person_name"
+            android:hint="@string/friend_name"
             app:placeholderText="John"
             style="@style/EditText">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_person_name"
+                android:id="@+id/et_friend_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"

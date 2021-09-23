@@ -22,7 +22,6 @@
             android:scaleType="fitXY"
             tools:src="@drawable/ic_image"/>
 
-
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_name"
             android:layout_width="match_parent"

@@ -12,6 +12,6 @@ interface EquipmentDao: BaseDao<EquipmentEntity> {
     fun getAll(): LiveData<List<EquipmentEntity>>
 
     @Query("SELECT * FROM tb_equipment WHERE id = :mId")
-    fun getById(mId: Int): EquipmentEntity
+    fun getById(mId: Int): LiveData<EquipmentEntity>
 
 }
